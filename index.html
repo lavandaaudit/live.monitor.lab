@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex,nofollow">
+<title>Ibonarium Cosmo Dynamics LAB LIVE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+    color: #cfefff;
+    font-family: 'Cinzel', serif;
+}
+canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+}
+.wrapper {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px; /* Відступи зліва і справа */
+}
+.header {
+    text-align: center;
+    padding: 8px 4px;
+    background: #000;
+    flex-shrink: 0;
+}
+.main-title {
+    font-size: clamp(16px, 3.5vw, 24px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    text-shadow: 0 0 10px #ffcc00;
+    color: #ffffff; /* білий заголовок */
+    transition: all 0.3s ease;
+}
+.main-title:hover {
+    text-shadow: 0 0 30px #ffcc00;
+    transform: scale(1.04);
+}
+.content {
+    flex: 1;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow-y: auto;
+}
+.row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+}
+.block {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.block:hover { transform: scale(1.02); }
+.block img, .block video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+}
+.red-gif img { filter: hue-rotate(0deg) saturate(1.6) brightness(1.1); }
+.blue-gif img { filter: hue-rotate(200deg) saturate(1.6) brightness(1.1); }
+.footer {
+    text-align: center;
+    padding: 6px 0;
+    background: #000;
+    flex-shrink: 0;
+    font-size: clamp(10px, 2.5vw, 12px);
+    opacity: 0.8;
+    letter-spacing: 0.05em;
+}
+@media (max-width: 768px) {
+    .content { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="wrapper">
+    <div class="header">
+        <div class="main-title" onclick="window.open('https://t.me/ibonariumcosmodynamicslablive', '_blank')">
+            Ibonarium Cosmo Dynamics LAB LIVE
+        </div>
+    </div>
+    <div class="content">
+
+        <!-- Ряд зображень -->
+        <div class="row">
+            <div class="block red-gif">
+                <img src="https://soho.nascom.nasa.gov/data/LATEST/current_c2.gif" alt="LASCO C2" loading="lazy">
+            </div>
+            <div class="block">
+                <img src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0171.jpg" alt="AIA 171" loading="lazy">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="block blue-gif">
+                <img src="https://soho.nascom.nasa.gov/data/LATEST/current_c3.gif" alt="LASCO C3" loading="lazy">
+            </div>
+            <div class="block">
+                <img src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0193.jpg" alt="AIA 193" loading="lazy">
+            </div>
+        </div>
+
+        <!-- Відео-анімації -->
+        <div class="row">
+            <div class="block">
+                <video controls autoplay loop muted>
+                    <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_1024_0171_synoptic.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="block">
+                <video controls autoplay loop muted>
+                    <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_1024_0193_synoptic.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+        <div class="row">
+            <div class="block">
+                <video controls autoplay loop muted>
+                    <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_1024_0211_synoptic.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="block">
+                <video controls autoplay loop muted>
+                    <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/mpeg/latest_1024_0304_synoptic.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+
+    </div>
+    <div class="footer">
+        sun.sun.sun/live/cosmodynamics.lab.live
+    </div>
+</div>
+
+<script>
+// STARFIELD
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+let W, H, stars = [];
+function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    stars = Array.from({length: 180}, () => ({
+        x: Math.random()*W, y: Math.random()*H, z: Math.random()*W
+    }));
+}
+resize();
+window.addEventListener("resize", resize);
+function render() {
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0,0,W,H);
+    ctx.fillStyle = "#4dd2ff";
+    stars.forEach(s => {
+        s.z -= 0.25;
+        if (s.z <= 0) s.z = W;
+        const k = 128 / s.z;
+        const x = (s.x - W/2) * k + W/2;
+        const y = (s.y - H/2) * k + H/2;
+        if (x>0 && x<W && y>0 && y<H) {
+            const size = (1 - s.z/W)*3;
+            ctx.fillRect(x,y,size,size);
+        }
+    });
+    requestAnimationFrame(render);
+}
+render();
+</script>
+</body>
+</html>
