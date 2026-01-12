@@ -17,9 +17,9 @@ html, body {
     width: 100%;
     height: 100%;
     background: #000;
-    overflow: hidden;
     color: #cfefff;
     font-family: 'Cinzel', serif;
+    overflow: auto;
 }
 canvas {
     position: fixed;
@@ -29,43 +29,39 @@ canvas {
 .wrapper {
     position: relative;
     z-index: 1;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding: 0 20px; /* Відступи зліва і справа */
+    max-width: 1200px; /* контент не займає весь екран */
+    margin: 40px auto; /* чорні відступи зверху/знизу */
+    padding: 20px;
+    background: #000; /* чорний фон для відступів */
+    border-radius: 12px;
 }
 .header {
     text-align: center;
     padding: 8px 4px;
-    background: #000;
-    flex-shrink: 0;
 }
 .main-title {
-    font-size: clamp(16px, 3.5vw, 24px);
+    font-size: clamp(14px, 3vw, 20px); /* менший заголовок */
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     cursor: pointer;
     text-shadow: 0 0 10px #ffcc00;
-    color: #ffffff; /* білий заголовок */
+    color: #ffffff;
     transition: all 0.3s ease;
 }
 .main-title:hover {
-    text-shadow: 0 0 30px #ffcc00;
-    transform: scale(1.04);
+    text-shadow: 0 0 25px #ffcc00;
+    transform: scale(1.02);
 }
 .content {
-    flex: 1;
-    padding: 4px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    overflow-y: auto;
+    gap: 8px;
 }
 .row {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
+    gap: 8px;
 }
 .block {
     width: 100%;
@@ -76,7 +72,7 @@ canvas {
     cursor: pointer;
     transition: transform 0.3s ease;
 }
-.block:hover { transform: scale(1.02); }
+.block:hover { transform: scale(1.01); }
 .block img, .block video {
     width: 100%;
     height: 100%;
@@ -89,14 +85,12 @@ canvas {
 .footer {
     text-align: center;
     padding: 6px 0;
-    background: #000;
-    flex-shrink: 0;
-    font-size: clamp(10px, 2.5vw, 12px);
+    font-size: clamp(10px, 2vw, 12px);
     opacity: 0.8;
     letter-spacing: 0.05em;
+    margin-top: 10px;
 }
 @media (max-width: 768px) {
-    .content { overflow-y: auto; -webkit-overflow-scrolling: touch; }
     .row { grid-template-columns: 1fr; }
 }
 </style>
@@ -111,7 +105,7 @@ canvas {
     </div>
     <div class="content">
 
-        <!-- Ряд зображень -->
+        <!-- Зображення -->
         <div class="row">
             <div class="block red-gif">
                 <img src="https://soho.nascom.nasa.gov/data/LATEST/current_c2.gif" alt="LASCO C2" loading="lazy">
