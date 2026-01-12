@@ -8,18 +8,14 @@
 <title>Ibonarium Cosmo Dynamics LAB LIVE</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 html, body {
     width: 100%;
     min-height: 100%;
     background: #000;
     color: #cfefff;
     font-family: 'Cinzel', serif;
-    overflow-y: auto; /* дозволяємо вертикальний скрол */
+    overflow-y: auto; /* вертикальний скрол */
 }
 canvas {
     position: fixed;
@@ -30,7 +26,7 @@ canvas {
     position: relative;
     z-index: 1;
     max-width: 1200px;
-    margin: 40px auto; /* чорні відступи */
+    margin: 40px auto; /* чорні відступи з усіх сторін */
     padding: 20px;
     background: #000;
     border-radius: 12px;
@@ -46,7 +42,7 @@ canvas {
     letter-spacing: 0.06em;
     cursor: pointer;
     text-shadow: 0 0 10px #ffcc00;
-    color: #ffffff;
+    color: #fff;
     transition: all 0.3s ease;
 }
 .main-title:hover {
@@ -56,7 +52,7 @@ canvas {
 .content {
     display: flex;
     flex-direction: column;
-    gap: 12px; /* відстань між рядами */
+    gap: 16px; /* відстань між рядами */
 }
 .row {
     display: grid;
@@ -104,7 +100,7 @@ canvas {
         </div>
     </div>
     <div class="content">
-        <!-- Зображення -->
+        <!-- Ряд 1 -->
         <div class="row">
             <div class="block red-gif">
                 <img src="https://soho.nascom.nasa.gov/data/LATEST/current_c2.gif" alt="LASCO C2" loading="lazy">
@@ -114,6 +110,7 @@ canvas {
             </div>
         </div>
 
+        <!-- Ряд 2 -->
         <div class="row">
             <div class="block blue-gif">
                 <img src="https://soho.nascom.nasa.gov/data/LATEST/current_c3.gif" alt="LASCO C3" loading="lazy">
@@ -123,6 +120,7 @@ canvas {
             </div>
         </div>
 
+        <!-- Ряд 3 -->
         <div class="row">
             <div class="block">
                 <img src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0304.jpg" alt="AIA 304" loading="lazy">
@@ -132,6 +130,7 @@ canvas {
             </div>
         </div>
 
+        <!-- Ряд 4 -->
         <div class="row">
             <div class="block">
                 <img src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0131.jpg" alt="AIA 131" loading="lazy">
@@ -141,7 +140,7 @@ canvas {
             </div>
         </div>
 
-        <!-- Відео-анімації -->
+        <!-- Відео-анімації 4 шт -->
         <div class="row">
             <div class="block">
                 <video controls autoplay loop muted>
