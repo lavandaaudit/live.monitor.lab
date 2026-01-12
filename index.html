@@ -15,18 +15,19 @@ html, body {
     background: #000;
     color: #cfefff;
     font-family: 'Cinzel', serif;
-    overflow-y: auto; /* вертикальний скрол */
+    overflow-y: auto; /* дозволяємо вертикальний скрол */
 }
 canvas {
     position: fixed;
     inset: 0;
     z-index: 0;
+    pointer-events: none; /* не перекриває скрол */
 }
 .wrapper {
     position: relative;
     z-index: 1;
     max-width: 1200px;
-    margin: 40px auto; /* чорні відступи з усіх сторін */
+    margin: 40px auto; /* чорні відступи з усіх боків */
     padding: 20px;
     background: #000;
     border-radius: 12px;
