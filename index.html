@@ -57,18 +57,18 @@
       <div class="block"><img src="http://sdowww.lmsal.com/sdomedia/SunInTime/mostrecent/l0094.jpg?t="+Date.now() alt="AIA 094" loading="lazy"></div>
     </div>
 
-    <!-- Нижні відео – тепер з Helioviewer (динамічні, найсвіжіші) -->
+    <!-- Нижні блоки — ПРЯМІ mp4 з sdo.gsfc.nasa.gov (без _synoptic, бо вони зараз працюють) -->
     <div class="row">
       <div class="block">
         <video controls autoplay loop muted playsinline poster="http://sdowww.lmsal.com/sdomedia/SunInTime/mostrecent/l0171.jpg">
-          <source src="https://api.helioviewer.org/v2/queueMovie/?startTime=2026-03-13T00:00:00Z&endTime=2026-03-13T09:00:00Z&layers=[SDO,AIA,171,1,100]&events=&eventLabels=true&scale=2.42&format=mp4" type="video/mp4">
-          <div class="fallback-text">Анімація AIA 171 (останні години) від Helioviewer</div>
+          <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0171.mp4?t="+Date.now() type="video/mp4">
+          <div class="fallback-text">Анімація AIA 171 (останні дані)</div>
         </video>
       </div>
       <div class="block">
         <video controls autoplay loop muted playsinline poster="http://sdowww.lmsal.com/sdomedia/SunInTime/mostrecent/l0193.jpg">
-          <source src="https://api.helioviewer.org/v2/queueMovie/?startTime=2026-03-13T00:00:00Z&endTime=2026-03-13T09:00:00Z&layers=[SDO,AIA,193,1,100]&events=&eventLabels=true&scale=2.42&format=mp4" type="video/mp4">
-          <div class="fallback-text">Анімація AIA 193 (останні години) від Helioviewer</div>
+          <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0193.mp4?t="+Date.now() type="video/mp4">
+          <div class="fallback-text">Анімація AIA 193 (останні дані)</div>
         </video>
       </div>
     </div>
@@ -76,14 +76,14 @@
     <div class="row">
       <div class="block">
         <video controls autoplay loop muted playsinline poster="http://sdowww.lmsal.com/sdomedia/SunInTime/mostrecent/l0211.jpg">
-          <source src="https://api.helioviewer.org/v2/queueMovie/?startTime=2026-03-13T00:00:00Z&endTime=2026-03-13T09:00:00Z&layers=[SDO,AIA,211,1,100]&events=&eventLabels=true&scale=2.42&format=mp4" type="video/mp4">
-          <div class="fallback-text">Анімація AIA 211 (останні години) від Helioviewer</div>
+          <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0211.mp4?t="+Date.now() type="video/mp4">
+          <div class="fallback-text">Анімація AIA 211 (останні дані)</div>
         </video>
       </div>
       <div class="block">
         <video controls autoplay loop muted playsinline poster="http://sdowww.lmsal.com/sdomedia/SunInTime/mostrecent/l0304.jpg">
-          <source src="https://api.helioviewer.org/v2/queueMovie/?startTime=2026-03-13T00:00:00Z&endTime=2026-03-13T09:00:00Z&layers=[SDO,AIA,304,1,100]&events=&eventLabels=true&scale=2.42&format=mp4" type="video/mp4">
-          <div class="fallback-text">Анімація AIA 304 (останні години) від Helioviewer</div>
+          <source src="https://sdo.gsfc.nasa.gov/assets/img/latest/latest_1024_0304.mp4?t="+Date.now() type="video/mp4">
+          <div class="fallback-text">Анімація AIA 304 (останні дані)</div>
         </video>
       </div>
     </div>
@@ -93,7 +93,7 @@
 </div>
 
 <script>
-// STARFIELD (без змін)
+// STARFIELD
 const canvas = document.getElementById("stars");
 const ctx = canvas.getContext("2d");
 let W, H, stars = [];
@@ -114,11 +114,12 @@ function render() {
 }
 render();
 
-// Оновлення timestamp кожні 5 хв
+// Автооновлення медіа кожні 5 хв
 setInterval(() => {
   const t = Date.now();
   document.querySelectorAll('img[src*="?t="], source[src*="?t="]').forEach(el => {
-    el.src = el.src.split('?t=')[0] + '?t=' + t;
+    const base = el.src.split('?t=')[0];
+    el.src = base + '?t=' + t;
   });
 }, 300000);
 </script>
