@@ -22,7 +22,17 @@
     .block img, .block video { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 10px; }
     .red-gif img, .red-gif video { filter: hue-rotate(0deg) saturate(1.6) brightness(1.1); }
     .blue-gif img, .blue-gif video { filter: hue-rotate(200deg) saturate(1.6) brightness(1.1); }
-    .fallback-text { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: #888; font-size: 11px; text-align: center; padding: 6px; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
+    .fallback-text { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: #888; font-size: 11px; text-align: center; padding: 6px; pointer-events: none; opacity: 0; transition: opacity 0.3s; z-index: 4; }
+    .suvi-ui { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 3; background: rgba(0,0,0,0.4); transition: background 0.3s; }
+    .block:hover .suvi-ui { background: rgba(0,0,0,0.2); }
+    .suvi-btn { cursor: pointer; font-size: 40px; color: rgba(255,255,255,0.8); text-shadow: 0 0 10px #000; padding: 20px; transition: all 0.2s; user-select: none; }
+    .suvi-btn:hover { color: #fff; transform: scale(1.1); text-shadow: 0 0 15px #ffcc00; }
+    .suvi-status { position: absolute; top: 10px; left: 10px; font-size: 12px; color: #ffcc00; text-shadow: 0 0 5px #000; z-index: 4; font-weight: bold; }
+    .suvi-download-btn { position: absolute; top: 10px; right: 10px; font-size: 20px; background: rgba(0,0,0,0.6); color: #fff; padding: 8px; border-radius: 8px; text-decoration: none; z-index: 5; transition: transform 0.2s; cursor: pointer; }
+    .suvi-download-btn:hover { transform: scale(1.1); background: rgba(0,0,0,0.8); }
+    .suvi-poster, .suvi-canvas { width: 100%; height: 100%; object-fit: contain; background: #000; display: block; position: absolute; inset: 0; }
+    .block .suvi-canvas { z-index: 1; }
+    .block .suvi-poster { z-index: 0; }
     .block:hover .fallback-text { opacity: 1; }
     .footer { text-align: center; padding: 8px 0; font-size: clamp(10px, 2vw, 12px); opacity: 0.8; letter-spacing: 0.05em; margin-top: 20px; }
     @media (max-width: 768px) { .row { grid-template-columns: 1fr; } }
@@ -40,20 +50,20 @@
     <!-- СТАТИЧНІ ОНОВЛЮВАНІ ДАНІ (РЯД 1-4) -->
     <div class="row">
       <div class="block red-gif">
-        <video autoplay loop muted playsinline oncanplay="this.playbackRate = 0.1;">
+        <video autoplay loop muted playsinline>
           <source src="https://soho.nascom.nasa.gov/data/LATEST/current_c2small.mp4" type="video/mp4">
         </video>
-        <div class="fallback-text">LASCO C2 (Швидкість x0.1)</div>
+        <div class="fallback-text">LASCO C2</div>
       </div>
       <div class="block"><img src="https://sdowww.lmsal.com/sdomedia/SunInTime/mostrecent/l0171.jpg?t=init" alt="AIA 171" loading="lazy"></div>
     </div>
     
     <div class="row">
       <div class="block blue-gif">
-        <video autoplay loop muted playsinline oncanplay="this.playbackRate = 0.1;">
+        <video autoplay loop muted playsinline>
           <source src="https://soho.nascom.nasa.gov/data/LATEST/current_c3small.mp4" type="video/mp4">
         </video>
-        <div class="fallback-text">LASCO C3 (Швидкість x0.1)</div>
+        <div class="fallback-text">LASCO C3</div>
       </div>
       <div class="block"><img src="https://sdowww.lmsal.com/sdomedia/SunInTime/mostrecent/l0193.jpg?t=init" alt="AIA 193" loading="lazy"></div>
     </div>
@@ -68,34 +78,34 @@
       <div class="block"><img src="https://sdowww.lmsal.com/sdomedia/SunInTime/mostrecent/l0094.jpg?t=init" alt="AIA 094" loading="lazy"></div>
     </div>
 
-    <!-- SOHO/SDO ВІДЕОПЛЕЄРИ (ПОЛЕГШЕНІ small.mp4 З ПЛАВНОЮ ХОДОЮ 0.1x) -->
+    <!-- GOES SUVI LIVE ANIMATIONS (4 СПЕКТРА) -->
     <div class="row">
-      <div class="block">
-        <video autoplay loop muted playsinline oncanplay="this.playbackRate = 0.1;">
-          <source src="https://soho.nascom.nasa.gov/data/LATEST/current_eit_171small.mp4" type="video/mp4">
-        </video>
-        <div class="fallback-text">AIA 171 (48h | Швидкість x0.1)</div>
+      <div class="block" id="suvi-171-container">
+        <img src="https://sdowww.lmsal.com/sdomedia/SunInTime/mostrecent/l0171.jpg?t=init" class="suvi-poster" alt="SUVI 171">
+        <canvas class="suvi-canvas" style="display:none;"></canvas>
+        <div class="suvi-ui"><div class="suvi-btn play-btn">▶</div><div class="suvi-status"></div></div>
+        <div class="fallback-text">GOES SUVI 171 (48h)</div>
       </div>
-      <div class="block">
-        <video autoplay loop muted playsinline oncanplay="this.playbackRate = 0.1;">
-          <source src="https://soho.nascom.nasa.gov/data/LATEST/current_eit_195small.mp4" type="video/mp4">
-        </video>
-        <div class="fallback-text">AIA 193 (48h | Швидкість x0.1)</div>
+      <div class="block" id="suvi-195-container">
+        <img src="https://sdowww.lmsal.com/sdomedia/SunInTime/mostrecent/l0193.jpg?t=init" class="suvi-poster" alt="SUVI 195">
+        <canvas class="suvi-canvas" style="display:none;"></canvas>
+        <div class="suvi-ui"><div class="suvi-btn play-btn">▶</div><div class="suvi-status"></div></div>
+        <div class="fallback-text">GOES SUVI 195 (48h)</div>
       </div>
     </div>
 
     <div class="row">
-      <div class="block">
-        <video autoplay loop muted playsinline oncanplay="this.playbackRate = 0.1;">
-          <source src="https://soho.nascom.nasa.gov/data/LATEST/current_eit_284small.mp4" type="video/mp4">
-        </video>
-        <div class="fallback-text">AIA 211 (48h | Швидкість x0.1)</div>
+      <div class="block" id="suvi-284-container">
+        <img src="https://sdowww.lmsal.com/sdomedia/SunInTime/mostrecent/l0211.jpg?t=init" class="suvi-poster" alt="SUVI 284">
+        <canvas class="suvi-canvas" style="display:none;"></canvas>
+        <div class="suvi-ui"><div class="suvi-btn play-btn">▶</div><div class="suvi-status"></div></div>
+        <div class="fallback-text">GOES SUVI 284 (48h)</div>
       </div>
-      <div class="block">
-        <video autoplay loop muted playsinline oncanplay="this.playbackRate = 0.1;">
-          <source src="https://soho.nascom.nasa.gov/data/LATEST/current_eit_304small.mp4" type="video/mp4">
-        </video>
-        <div class="fallback-text">AIA 304 (48h | Швидкість x0.1)</div>
+      <div class="block" id="suvi-304-container">
+        <img src="https://sdowww.lmsal.com/sdomedia/SunInTime/mostrecent/l0304.jpg?t=init" class="suvi-poster" alt="SUVI 304">
+        <canvas class="suvi-canvas" style="display:none;"></canvas>
+        <div class="suvi-ui"><div class="suvi-btn play-btn">▶</div><div class="suvi-status"></div></div>
+        <div class="fallback-text">GOES SUVI 304 (48h)</div>
       </div>
     </div>
 
@@ -149,7 +159,180 @@ setInterval(() => {
     el.src = base + '?t=' + t;
   });
 }, 300000);
+
+// GOES SUVI INTERACTIVE ANIMATION PLAYERS
+const suviChannels = ['171', '195', '284', '304'];
+
+suviChannels.forEach(channel => {
+  const container = document.getElementById(`suvi-${channel}-container`);
+  if(!container) return;
+  const poster = container.querySelector('.suvi-poster');
+  const canvas = container.querySelector('.suvi-canvas');
+  const btn = container.querySelector('.play-btn');
+  const status = container.querySelector('.suvi-status');
+  const ui = container.querySelector('.suvi-ui');
+  const ctx = canvas.getContext('2d', { alpha: false });
+  
+  let frames = [];
+  let images = [];
+  let isPlaying = false;
+  let isLoaded = false;
+  let isLoading = false;
+  let currentIndex = 0;
+  let animationId;
+  let lastDrawTime = 0;
+  let dlBtn; // Кнопка завантаження
+  const frameInterval = 80; // 80ms => ~12 FPS
+
+  function playLoop(timestamp) {
+    if (!isPlaying) return;
+    if (timestamp - lastDrawTime >= frameInterval) {
+      const img = images[currentIndex];
+      if (img && img.complete && img.naturalWidth > 0) {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      }
+      currentIndex = (currentIndex + 1) % images.length;
+      
+      lastDrawTime = timestamp;
+    }
+    animationId = requestAnimationFrame(playLoop);
+  }
+
+  // Натискання на всю панель або кнопку діє як плей/стоп
+  ui.addEventListener('click', () => {
+    // Якщо йде завантаження (loading) — ігноруємо кліки, щоб не глючило
+    if (isLoading) return;
+
+    // Якщо завантажено та грає -> Стоп/Пауза
+    if (isPlaying) {
+      isPlaying = false;
+      btn.style.display = 'block'; // Відновити видимість кнопки Плей при паузі
+      btn.innerHTML = '▶'; 
+      ui.style.background = 'rgba(0,0,0,0.4)';
+      cancelAnimationFrame(animationId);
+      return;
+    }
+
+    // Якщо завантажено, але на паузі -> Плей
+    if (isLoaded && !isPlaying) {
+      isPlaying = true;
+      btn.style.display = 'none';  // Ховаємо кнопку повністю під час програвання
+      ui.style.background = 'transparent'; // Приховуємо затемнення під час відтворення
+      animationId = requestAnimationFrame(playLoop);
+      return;
+    }
+
+    // Якщо не завантажено -> Завантажити 48h JSON
+    isLoading = true;
+    status.innerText = "Loading...";
+    btn.style.display = 'none'; // Ховаємо плей на час завантаження
+
+    fetch(`https://services.swpc.noaa.gov/products/animations/suvi-primary-${channel}.json`)
+      .then(res => res.json())
+      .then(data => {
+        if (!data || !data.length) { status.innerText = "Error"; isLoading = false; btn.style.display = 'block'; return; }
+        
+        frames = data; // Завантажуємо ВСІ доступні кадри (зазвичай 48 годин)
+        let loadedCount = 0;
+        images = new Array(frames.length); // Зберігаємо порядок масиву
+
+        const finishLoading = () => {
+          isLoading = false;
+          isLoaded = true;
+          isPlaying = true;
+          status.innerText = "LIVE (48h)";
+          btn.style.display = 'none'; // Кнопка повністю пропадає коли починає програватись відео
+          ui.style.background = 'transparent';
+          poster.style.display = 'none';
+          canvas.style.display = 'block';
+          
+          const validImg = images.find(i => i && i.naturalWidth);
+          if (validImg) {
+            canvas.width = validImg.naturalWidth;
+            canvas.height = validImg.naturalHeight;
+          } else {
+            canvas.width = 800; canvas.height = 800;
+          }
+          
+          // Створюємо кнопку ЗАВАНТАЖИТИ (вона з'явиться після буферизації)
+          dlBtn = document.createElement('div');
+          dlBtn.innerHTML = '📥 Скачати';
+          dlBtn.className = 'suvi-download-btn';
+          dlBtn.title = 'Скачати відео (WebM)';
+          container.appendChild(dlBtn);
+          
+          dlBtn.addEventListener('click', (e) => {
+             e.stopPropagation();
+             if (dlBtn.innerText === '⏳ Запис...') return;
+             
+             dlBtn.innerText = '⏳ Запис...';
+             
+             // Змушуємо плеєр грати для запису якщо був на паузі
+             if (!isPlaying) {
+               isPlaying = true;
+               animationId = requestAnimationFrame(playLoop);
+             }
+             
+             try {
+               const stream = canvas.captureStream(Math.floor(1000/frameInterval));
+               const rec = new MediaRecorder(stream, { mimeType: 'video/webm' });
+               const ch = [];
+               rec.ondataavailable = ev => { if(ev.data.size > 0) ch.push(ev.data); };
+               rec.onstop = () => {
+                 const blob = new Blob(ch, { type: 'video/webm' });
+                 const url = URL.createObjectURL(blob);
+                 const a = document.createElement('a');
+                 a.href = url;
+                 a.download = `GOES19_SUVI_${channel}_48h.webm`;
+                 a.click();
+                 URL.revokeObjectURL(url);
+                 dlBtn.innerHTML = '📥 Скачати';
+               };
+               rec.start();
+               
+               // Відраховуємо рівно 1 цикл кадрів і зупиняємо запис
+               let frameCount = 0;
+               const recInterval = setInterval(() => {
+                 frameCount++;
+                 if (frameCount >= images.length) {
+                   clearInterval(recInterval);
+                   if (rec.state !== 'inactive') rec.stop();
+                 }
+               }, frameInterval);
+             } catch(err) {
+               console.warn(err);
+               dlBtn.innerHTML = '❌ Помилка';
+               setTimeout(() => dlBtn.innerHTML = '📥 Скачати', 3000);
+             }
+          });
+          
+          animationId = requestAnimationFrame(playLoop);
+        };
+
+        frames.forEach((frame, idx) => {
+          const img = new Image();
+          img.crossOrigin = "anonymous";
+          img.onload = () => {
+            loadedCount++;
+            status.innerText = `Buf: ${Math.round((loadedCount/frames.length)*100)}%`;
+            // Запуск одразу як завантажиться 30% буфера, решта докачується в тлі
+            if (isLoading && loadedCount > frames.length * 0.3) {
+              finishLoading();
+            }
+          };
+          img.onerror = () => { loadedCount++; };
+          img.src = `https://services.swpc.noaa.gov${frame.url}`;
+          images[idx] = img;
+        });
+      })
+      .catch(err => {
+        console.error(`Error loading SUVI ${channel}:`, err);
+        status.innerText = "Failed";
+        isLoading = false;
+        btn.style.display = 'block';
+      });
+  });
+});
 </script>
 </body>
 </html>
-
